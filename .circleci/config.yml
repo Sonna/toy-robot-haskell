@@ -12,17 +12,17 @@ jobs:
 
   test:
     docker:
-    - image: microsoft/dotnet:latest
+    - image: haskell:latest
     steps:
     - checkout
     - run: cabal update
     - run: cabal sandbox init
-    - run: cabal install -j
+    - run: cabal install --enable-tests
     - run: cabal test
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-    - build
     - test
+    - build
