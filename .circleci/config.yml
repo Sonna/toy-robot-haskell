@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: haskell:latest
+    steps:
+    - checkout
+    - run: cabal update
+    - run: cabal sandbox init
+    - run: cabal install -j
+    - run: cabal build
+
+  test:
+    docker:
+    - image: microsoft/dotnet:latest
+    steps:
+    - checkout
+    - run: cabal update
+    - run: cabal sandbox init
+    - run: cabal install -j
+    - run: cabal test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+    - build
+    - test
