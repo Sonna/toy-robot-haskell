@@ -9,4 +9,5 @@ import System.Environment
 old_main :: IO ()
 old_main = getArgs >>= print . haqify . head
 
+haqify :: String -> String
 haqify s = "Haq! " ++ s
