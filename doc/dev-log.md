@@ -80,6 +80,42 @@ Generating toy-robot-haskell.cabal...
 You may want to edit the .cabal file and add a Description field.
 ```
 
+```console
+$ cabal sandbox init
+Writing a default package environment file to
+/Users/Sonna/Projects/haskell/toy-robot-haskell/cabal.sandbox.config
+Creating a new sandbox at
+/Users/Sonna/Projects/haskell/toy-robot-haskell/.cabal-sandbox
+
+$ cabal install -j
+Warning: The package list for 'hackage.haskell.org' does not exist. Run 'cabal
+update' to download it.
+Resolving dependencies...
+Notice: installing into a sandbox located at
+/Users/Sonna/Projects/haskell/toy-robot-haskell/.cabal-sandbox
+Configuring toy-robot-haskell-0.1.0.0...
+Building toy-robot-haskell-0.1.0.0...
+Installed toy-robot-haskell-0.1.0.0
+```
+
+```console
+$ cabal update
+Downloading the latest package list from hackage.haskell.org
+
+```
+
+```console
+$ cabal install --enable-tests
+Warning: The package list for 'hackage.haskell.org' does not exist. Run 'cabal
+update' to download it.
+Resolving dependencies...
+Notice: installing into a sandbox located at
+/Users/Sonna/Projects/haskell/toy-robot-haskell/.cabal-sandbox
+Configuring toy-robot-haskell-0.1.0.0...
+Building toy-robot-haskell-0.1.0.0...
+Installed toy-robot-haskell-0.1.0.0
+```
+
 # References:
 - [How to write a Haskell program \- HaskellWiki]
   (https://wiki.haskell.org/How_to_write_a_Haskell_program)
