@@ -5,9 +5,10 @@ jobs:
     - image: haskell:latest
     steps:
     - checkout
-    - run: cabal update
     - run: cabal sandbox init
-    - run: cabal install -j
+    - run: cabal update
+    # - run: cabal install -j
+    - run: cabal install --enable-tests --enable-documentation
     - run: cabal build
 
   test:
@@ -15,9 +16,9 @@ jobs:
     - image: haskell:latest
     steps:
     - checkout
-    - run: cabal update
     - run: cabal sandbox init
-    - run: cabal install --enable-tests
+    - run: cabal update
+    - run: cabal install --enable-tests --enable-documentation
     - run: cabal test
 
 workflows:

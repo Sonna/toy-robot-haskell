@@ -46,15 +46,16 @@ build-type:          Simple
 extra-source-files:  ChangeLog.md
 
 -- Constraint on the version of Cabal needed to build this package.
-cabal-version:       >=1.10
+-- cabal-version:       >=1.10
+cabal-version:       >=2.0
 
 
-library haq
---   other-modules:      Haq
-  exposed-modules:     Haq
-  build-depends:       base >=4.10 && <4.11
-  hs-source-dirs:      src
-  default-language:    Haskell2010
+-- library haq
+-- --   other-modules:      Haq
+--   exposed-modules:     Haq
+--   build-depends:       base >=4.10 && <4.11
+--   hs-source-dirs:      src
+--   default-language:    Haskell2010
 
 
 executable toy-robot-haskell
@@ -62,7 +63,7 @@ executable toy-robot-haskell
   main-is:             Main.hs
 
   -- Modules included in this executable, other than Main.
-  -- other-modules:      Haq
+  other-modules:      Haq
   -- exposed-modules:    Haq
 
   -- LANGUAGE extensions used by modules in this package.
@@ -92,9 +93,8 @@ test-suite tests
   main-is: HSpecTests.hs
   hs-source-dirs:      src, spec
   build-depends:       base,
-                       haq,
+--                       haq,
                        hspec                >= 1.8
   default-language:    Haskell2010
   -- Required due to including src/Haq.hs
   other-modules:      Haq
-
