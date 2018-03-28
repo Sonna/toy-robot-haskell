@@ -1,0 +1,15 @@
+image: haskell:latest
+
+before_script:
+- cabal sandbox init
+- cabal update
+# - cabal install -j
+- cabal install --enable-tests --enable-documentation
+
+build:
+  script:
+  - cabal build
+
+test:
+  script:
+  - cabal test
