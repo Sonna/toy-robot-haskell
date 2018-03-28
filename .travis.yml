@@ -1,0 +1,17 @@
+sudo: required
+
+language: haskell
+
+services:
+- docker
+
+before_install:
+- docker pull haskell:latest
+
+script:
+- docker run --rm -v $(pwd):/app -w /app haskell:latest bash -c "cabal sandbox init"
+- docker run --rm -v $(pwd):/app -w /app haskell:latest bash -c "cabal update"
+# - docker run --rm -v $(pwd):/app -w /app haskell:latest bash -c "cabal install -j"
+- docker run --rm -v $(pwd):/app -w /app haskell:latest bash -c "cabal install --enable-tests --enable-documentation"
+- docker run --rm -v $(pwd):/app -w /app haskell:latest bash -c "cabal build"
+- docker run --rm -v $(pwd):/app -w /app haskell:latest bash -c "cabal test"
