@@ -46,8 +46,12 @@ instance Entity Robot where
     | otherwise = robot
 
   move robot
-    | (facing robot) == "NORTH" && y robot + 1 < 4 = robot { y = y robot + 1 }
-    | (facing robot) == "SOUTH" && y robot - 1 > 0 = robot { y = y robot - 1 }
-    | (facing robot) == "EAST" && x robot + 1 < 4 = robot { x = x robot + 1 }
-    | (facing robot) == "WEST" && x robot - 1 > 0 = robot { x = x robot - 1 }
+    | (facing robot) == "NORTH" && yNorth < 4 = robot { y = yNorth }
+    | (facing robot) == "SOUTH" && ySouth > 0 = robot { y = ySouth }
+    | (facing robot) == "EAST" && xEast < 4 = robot { x = xEast }
+    | (facing robot) == "WEST" && xWest > 0 = robot { x = xWest }
     | otherwise = robot
+    where yNorth = y robot + 1
+          ySouth = y robot - 1
+          xEast = x robot + 1
+          xWest = x robot - 1
