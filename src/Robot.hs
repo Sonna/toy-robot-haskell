@@ -27,5 +27,9 @@ instance Entity Robot where
   report robot = putStrLn $
     show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
 
-  left robot | (facing robot) == "NORTH" = robot { facing = "WEST" }
-             | otherwise = robot
+  left robot
+    | (facing robot) == "NORTH" = robot { facing = "WEST" }
+    | (facing robot) == "WEST" = robot { facing = "SOUTH" }
+    | (facing robot) == "SOUTH" = robot { facing = "EAST" }
+    | (facing robot) == "EAST" = robot { facing = "NORTH" }
+    | otherwise = robot
