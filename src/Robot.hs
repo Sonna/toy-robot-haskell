@@ -2,6 +2,7 @@ module Robot
 (
   Robot (..),
   Robot.new,
+  Robot.left,
   Robot.report
 ) where
 
@@ -20,7 +21,11 @@ new () = Robot
 
 class Entity a where
   report :: a -> IO ()
+  left :: a -> a
 
 instance Entity Robot where
   report robot = putStrLn $
     show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
+
+  left robot | (facing robot) == "NORTH" = robot { facing = "WEST" }
+             | otherwise = robot
