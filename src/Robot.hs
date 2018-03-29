@@ -5,9 +5,11 @@ module Robot
   Robot.left,
   Robot.right,
   Robot.move,
+  Robot.place,
   Robot.report
 ) where
 
+import Data.List.Split
 
 data Robot = Robot
   { x :: Int
@@ -26,6 +28,7 @@ class Entity a where
   left :: a -> a
   right :: a -> a
   move :: a -> a
+  place :: a -> String -> a
 
 instance Entity Robot where
   report robot = putStrLn $
@@ -55,3 +58,6 @@ instance Entity Robot where
           ySouth = y robot - 1
           xEast = x robot + 1
           xWest = x robot - 1
+
+  place robot rawCoordinates = robot { x = (read newX), y = (read newY), facing = newFacing }
+    where [newX, newY, newFacing] = splitOn "," rawCoordinates

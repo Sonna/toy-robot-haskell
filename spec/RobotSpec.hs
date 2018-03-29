@@ -189,3 +189,20 @@ spec = do
       (x subject) `shouldBe` 4
       (y subject) `shouldBe` 0
       (facing subject) `shouldBe` "SOUTH"
+
+  describe "place function" $ do
+    it "place Robot at 3,3,SOUTH" $ do
+      let robot = Robot 0 0 "NORTH"
+      let subject = place robot "3,3,SOUTH"
+
+      (x subject) `shouldBe` 3
+      (y subject) `shouldBe` 3
+      (facing subject) `shouldBe` "SOUTH"
+
+    it "place Robot at 4,2,WEST" $ do
+      let robot = new()
+      let subject = place robot "4,2,WEST"
+
+      (x subject) `shouldBe` 4
+      (y subject) `shouldBe` 2
+      (facing subject) `shouldBe` "WEST"
