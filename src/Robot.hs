@@ -2,8 +2,8 @@ module Robot
 (
   Robot (..),
   -- Entity (..),
-  new,
-  report
+  Robot.new,
+  Robot.report
 ) where
 
 -- data Robot = Coordinate Int Int String
@@ -20,7 +20,19 @@ new () = Robot
   , y = 0
   , facing = "NORTH" }
 
-report :: Robot -> String
-report robot = show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
+-- report :: Robot -> String
+-- report robot = show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
 
 -- main = print (report $ Robot 0 0 "NORTH" )
+
+class Entity a where
+  report :: a -> String
+  -- new :: () -> a
+
+instance Entity Robot where
+  report robot = show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
+  -- report = show x ++ "," ++ show y ++  "," ++ facing
+  -- new () = Robot 0 0 "NORTH"
+    -- { x = 0
+    -- , y = 0
+    -- , facing = "NORTH" }
