@@ -1,11 +1,12 @@
-module Main where
-
-import Haq
 import Test.Hspec
 
-main :: IO ()
-main = hspec $ do
+import qualified HaqSpec
+import qualified RobotSpec
 
-  describe "Validate haqify function" $ do
-    it "haqify is supposed to prefix Haq! to things" $ do
-      haqify "me" `shouldBe` "Haq! me"
+main :: IO ()
+main = hspec spec
+
+spec :: Spec
+spec = do
+  describe "Haq"     HaqSpec.spec
+  describe "Robot"     RobotSpec.spec
