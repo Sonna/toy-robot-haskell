@@ -92,3 +92,100 @@ spec = do
       (x subject) `shouldBe` 0
       (y subject) `shouldBe` 0
       (facing subject) `shouldBe` "NORTH"
+
+  describe "move function" $ do
+    it "move increases `y` field by 1, when facing NORTH" $ do
+      let robot = Robot 0 0 "NORTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 1
+      (facing subject) `shouldBe` "NORTH"
+
+    it "move decreases `y` field by 1, when facing SOUTH" $ do
+      let robot = Robot 2 2 "SOUTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 2
+      (y subject) `shouldBe` 1
+      (facing subject) `shouldBe` "SOUTH"
+
+    it "move increase `x` field by 1, when facing EAST" $ do
+      let robot = Robot 2 2 "EAST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 3
+      (y subject) `shouldBe` 2
+      (facing subject) `shouldBe` "EAST"
+
+    it "move decreases `x` field by 1, when facing WEST" $ do
+      let robot = Robot 2 2 "WEST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 1
+      (y subject) `shouldBe` 2
+      (facing subject) `shouldBe` "WEST"
+
+    it "move does not fall off 4x4 Table, when at 0 0 SOUTH" $ do
+      let robot = Robot 0 0 "SOUTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "SOUTH"
+
+    it "move does not fall off 4x4 Table, when at 0 0 WEST" $ do
+      let robot = Robot 0 0 "WEST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "WEST"
+
+    it "move does not fall off 4x4 Table, when at 0 4 WEST" $ do
+      let robot = Robot 0 4 "WEST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 4
+      (facing subject) `shouldBe` "WEST"
+
+    it "move does not fall off 4x4 Table, when at 0 4 NORTH" $ do
+      let robot = Robot 0 4 "NORTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 4
+      (facing subject) `shouldBe` "NORTH"
+
+    it "move does not fall off 4x4 Table, when at 4 4 NORTH" $ do
+      let robot = Robot 4 4 "NORTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 4
+      (y subject) `shouldBe` 4
+      (facing subject) `shouldBe` "NORTH"
+
+    it "move does not fall off 4x4 Table, when at 4 4 EAST" $ do
+      let robot = Robot 4 4 "EAST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 4
+      (y subject) `shouldBe` 4
+      (facing subject) `shouldBe` "EAST"
+
+    it "move does not fall off 4x4 Table, when at 4 0 EAST" $ do
+      let robot = Robot 4 0 "EAST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 4
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "EAST"
+
+    it "move does not fall off 4x4 Table, when at 4 0 SOUTH" $ do
+      let robot = Robot 4 0 "SOUTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 4
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "SOUTH"

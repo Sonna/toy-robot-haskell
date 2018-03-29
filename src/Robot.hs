@@ -4,6 +4,7 @@ module Robot
   Robot.new,
   Robot.left,
   Robot.right,
+  Robot.move,
   Robot.report
 ) where
 
@@ -24,6 +25,7 @@ class Entity a where
   report :: a -> IO ()
   left :: a -> a
   right :: a -> a
+  move :: a -> a
 
 instance Entity Robot where
   report robot = putStrLn $
@@ -41,4 +43,11 @@ instance Entity Robot where
     | (facing robot) == "EAST" = robot { facing = "SOUTH" }
     | (facing robot) == "SOUTH" = robot { facing = "WEST" }
     | (facing robot) == "WEST" = robot { facing = "NORTH" }
+    | otherwise = robot
+
+  move robot
+    | (facing robot) == "NORTH" && y robot + 1 < 4 = robot { y = y robot + 1 }
+    | (facing robot) == "SOUTH" && y robot - 1 > 0 = robot { y = y robot - 1 }
+    | (facing robot) == "EAST" && x robot + 1 < 4 = robot { x = x robot + 1 }
+    | (facing robot) == "WEST" && x robot - 1 > 0 = robot { x = x robot - 1 }
     | otherwise = robot
