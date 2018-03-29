@@ -59,3 +59,36 @@ spec = do
       (x subject) `shouldBe` 0
       (y subject) `shouldBe` 0
       (facing subject) `shouldBe` "NORTH"
+
+  describe "right function" $ do
+    it "right rotates the facing direction clockwise" $ do
+      let robot = Robot 0 0 "NORTH"
+      let subject = right robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "EAST"
+
+    it "right rotates facing direction to SOUTH from EAST" $ do
+      let robot = Robot 0 0 "EAST"
+      let subject = right robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "SOUTH"
+
+    it "right rotates facing direction to WEST from SOUTH" $ do
+      let robot = Robot 0 0 "SOUTH"
+      let subject = right robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "WEST"
+
+    it "right rotates facing direction to NORTH from WEST" $ do
+      let robot = Robot 0 0 "WEST"
+      let subject = right robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "NORTH"

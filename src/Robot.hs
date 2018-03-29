@@ -3,6 +3,7 @@ module Robot
   Robot (..),
   Robot.new,
   Robot.left,
+  Robot.right,
   Robot.report
 ) where
 
@@ -22,6 +23,7 @@ new () = Robot
 class Entity a where
   report :: a -> IO ()
   left :: a -> a
+  right :: a -> a
 
 instance Entity Robot where
   report robot = putStrLn $
@@ -32,4 +34,11 @@ instance Entity Robot where
     | (facing robot) == "WEST" = robot { facing = "SOUTH" }
     | (facing robot) == "SOUTH" = robot { facing = "EAST" }
     | (facing robot) == "EAST" = robot { facing = "NORTH" }
+    | otherwise = robot
+
+  right robot
+    | (facing robot) == "NORTH" = robot { facing = "EAST" }
+    | (facing robot) == "EAST" = robot { facing = "SOUTH" }
+    | (facing robot) == "SOUTH" = robot { facing = "WEST" }
+    | (facing robot) == "WEST" = robot { facing = "NORTH" }
     | otherwise = robot
