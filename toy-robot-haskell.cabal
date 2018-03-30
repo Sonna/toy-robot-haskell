@@ -98,6 +98,8 @@ test-suite tests
                        deepseq,
                        directory,
 --                       haq,
+                       filepath >= 1.4,
+                       process >= 1.6,
                        split >= 0.2.2 && < 0.3,
 --                       slienty,
                        hspec                >= 1.8

@@ -1,5 +1,10 @@
 module ToyRobot.CLISpec where
 
+import System.IO
+import System.Process
+import System.Environment
+import System.FilePath.Posix
+
 import Robot
 import ToyRobot.CLI
 import TestHelpers
@@ -90,3 +95,76 @@ spec = do
       (x subject) `shouldBe` 3
       (y subject) `shouldBe` 3
       (facing subject) `shouldBe` "NORTH"
+
+  describe "Validate UserLoop function" $ do
+    it "run process on the command line" $ do
+      (Just hin, Just hout, _, _) <-
+        createProcess (proc "echo" ["hello"])
+        { std_in = CreatePipe, std_out = CreatePipe }
+
+      hPutStr hin "hello grep\ngoodbye grep"
+      echoBytes <- hGetContents hout
+
+      echoBytes `shouldBe` "hello\n"
+
+    -- it "can get build directory from current script for following specs" $ do
+    --   testsExe <- getExecutablePath
+    --   let testsDir = takeDirectory testsExe
+    --   let buildDir = takeDirectory testsDir
+    --   let exe = buildDir ++ "/toy-robot-haskell/toy-robot-haskell"
+
+    --   exe `shouldBe` "/Users/Sonna/Projects/haskell/toy-robot-haskell/dist/build/toy-robot-haskell/toy-robot-haskell"
+    --   buildDir `shouldBe` "/Users/Sonna/Projects/haskell/toy-robot-haskell/dist/build"
+    --   testsDir `shouldBe` "/Users/Sonna/Projects/haskell/toy-robot-haskell/dist/build/tests"
+    --   testsExe `shouldBe` "/Users/Sonna/Projects/haskell/toy-robot-haskell/dist/build/tests/tests"
+
+    it "run process and EXIT" $ do
+      -- (Just hin, Just hout, _, _) <-
+      --   createProcess (proc " dist/build/toy-robot-haskell/toy-robot-haskell" [""])
+      --   { std_in = CreatePipe, std_out = CreatePipe }
+      testsExe <- getExecutablePath
+      let testsDir = takeDirectory testsExe
+      let buildDir = takeDirectory testsDir
+      let exe = buildDir ++ "/toy-robot-haskell/toy-robot-haskell"
+      let filename = "spec/fixtures/process_a.txt"
+      handle <- openFile filename ReadMode
+
+      (_, Just hout, _, _) <-
+        createProcess (proc exe [])
+        { std_in = (UseHandle handle), std_out = CreatePipe }
+      -- (Just hin, Just hout, _, _) <-
+        -- createProcess (proc exe ["examples/example_a.txt"])
+        -- { std_in = CreatePipe, std_out = CreatePipe }
+
+      stdoutBytes <- hGetContents hout
+      stdoutBytes `shouldBe` "0,0,NORTH\n"
+
+    it "run process MOVE REPORT EXIT" $ do
+      testsExe <- getExecutablePath
+      let testsDir = takeDirectory testsExe
+      let buildDir = takeDirectory testsDir
+      let exe = buildDir ++ "/toy-robot-haskell/toy-robot-haskell"
+      let filename = "spec/fixtures/process_b.txt"
+      handle <- openFile filename ReadMode
+
+      (_, Just hout, _, _) <-
+        createProcess (proc exe [])
+        { std_in = (UseHandle handle), std_out = CreatePipe }
+
+      stdoutBytes <- hGetContents hout
+      stdoutBytes `shouldBe` "0,0,NORTH\n0,1,NORTH\n"
+
+    it "run process MOVE REPORT LEFT REPORT RIGHT RIGHT MOVE REPORT PLACE 2,4,EAST REPORT EXIT" $ do
+      testsExe <- getExecutablePath
+      let testsDir = takeDirectory testsExe
+      let buildDir = takeDirectory testsDir
+      let exe = buildDir ++ "/toy-robot-haskell/toy-robot-haskell"
+      let filename = "spec/fixtures/process_c.txt"
+      handle <- openFile filename ReadMode
+
+      (_, Just hout, _, _) <-
+        createProcess (proc exe [])
+        { std_in = (UseHandle handle), std_out = CreatePipe }
+
+      stdoutBytes <- hGetContents hout
+      stdoutBytes `shouldBe` "0,1,NORTH\n0,1,WEST\n1,1,EAST\n2,4,EAST\n"
