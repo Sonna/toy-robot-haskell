@@ -16,6 +16,7 @@ data Robot = Robot
   { x :: Int
   , y :: Int
   , facing :: String }
+  deriving (Show, Eq)
 
 new :: () -> Robot
 new () = Robot
@@ -25,17 +26,24 @@ new () = Robot
 
 
 class Entity a where
-  report :: a -> IO ()
+  -- report :: a -> (IO (), a)
+  -- report :: a -> IO ()
+  report :: a -> IO a
   left :: a -> a
   right :: a -> a
   move :: a -> a
   place :: a -> String -> a
   -- exec :: a -> String -> a
   exec :: a -> String -> String -> a
+  -- exec :: a -> String -> String -> IO a
 
 instance Entity Robot where
-  report robot = putStrLn $
-    show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
+  -- report robot = putStrLn $
+  --   show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
+
+  report robot = do
+    putStrLn (show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot))
+    return robot
 
   left robot
     | (facing robot) == "NORTH" = robot { facing = "WEST" }

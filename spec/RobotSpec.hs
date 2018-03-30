@@ -2,6 +2,7 @@ module RobotSpec where
 
 import Robot
 import TestHelpers
+-- import System.IO.Silently
 import Test.Hspec
 
 spec :: Spec
@@ -24,8 +25,17 @@ spec = do
 
   describe "Validate report function" $ do
     it "report is supposed to return x, y and facing direction" $ do
-      subject <- catchOutput (report $ Robot 0 0 "NORTH" )
-      subject `shouldBe` "0,0,NORTH\n"
+      -- subject <- catchOutput (report $ Robot 0 0 "NORTH" )
+      -- subject `shouldBe` "0,0,NORTH\n"
+      -- (subject, action) <- catchOutput (report $ Robot 0 0 "NORTH" )
+      (captured, result) <- capture (report $ Robot 0 0 "NORTH" )
+      captured `shouldBe` "0,0,NORTH\n"
+      result `shouldBe` (Robot 0 0 "NORTH")
+      -- subject <- report $ Robot 0 0 "NORTH"
+
+      -- (x subject) `shouldBe` 0
+      -- (y subject) `shouldBe` 0
+      -- (facing subject) `shouldBe` "NORTH"
 
   describe "left function" $ do
     it "left rotates the facing direction anti-clockwise" $ do
