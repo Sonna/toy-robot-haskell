@@ -34,9 +34,9 @@ class Entity a where
   exec :: a -> String -> String -> IO a
 
 instance Entity Robot where
-  report robot = do
+  report robot =
     putStrLn (show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot))
-    return robot
+    >> return robot
 
   left robot
     | (facing robot) == "NORTH" = robot { facing = "WEST" }
@@ -63,7 +63,10 @@ instance Entity Robot where
           xEast = x robot + 1
           xWest = x robot - 1
 
-  place robot rawCoordinates = robot { x = (read newX), y = (read newY), facing = newFacing }
+  place robot rawCoordinates = robot {
+    x = (read newX),
+    y = (read newY),
+    facing = newFacing }
     where [newX, newY, newFacing] = splitOn "," rawCoordinates
 
   exec robot rawCommand rawArgs
