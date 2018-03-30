@@ -2,6 +2,7 @@ module Robot
 (
   Robot (..),
   Robot.new,
+  Robot.exec,
   Robot.left,
   Robot.right,
   Robot.move,
@@ -29,6 +30,8 @@ class Entity a where
   right :: a -> a
   move :: a -> a
   place :: a -> String -> a
+  -- exec :: a -> String -> a
+  exec :: a -> String -> String -> a
 
 instance Entity Robot where
   report robot = putStrLn $
@@ -61,3 +64,12 @@ instance Entity Robot where
 
   place robot rawCoordinates = robot { x = (read newX), y = (read newY), facing = newFacing }
     where [newX, newY, newFacing] = splitOn "," rawCoordinates
+
+  exec robot rawCommand rawArgs
+    | rawCommand == "PLACE" = place robot rawArgs
+    | rawCommand == "MOVE" = move robot
+    | rawCommand == "LEFT" = left robot
+    | rawCommand == "RIGHT" = right robot
+    -- | rawCommand == "REPORT" = report robot
+    | otherwise = robot
+

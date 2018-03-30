@@ -206,3 +206,36 @@ spec = do
       (x subject) `shouldBe` 4
       (y subject) `shouldBe` 2
       (facing subject) `shouldBe` "WEST"
+
+  describe "exec function" $ do
+    it "exec Robot place at 3,3,SOUTH" $ do
+      let robot = Robot 0 0 "NORTH"
+      let subject = exec robot "PLACE" "3,3,SOUTH"
+
+      (x subject) `shouldBe` 3
+      (y subject) `shouldBe` 3
+      (facing subject) `shouldBe` "SOUTH"
+
+    it "exec Robot move" $ do
+      let robot = new()
+      let subject = exec robot "MOVE" ""
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 1
+      (facing subject) `shouldBe` "NORTH"
+
+    it "exec Robot LEFT" $ do
+      let robot = new()
+      let subject = exec robot "LEFT" ""
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "WEST"
+
+    it "exec Robot RIGHT" $ do
+      let robot = new()
+      let subject = exec robot "RIGHT" ""
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "EAST"
