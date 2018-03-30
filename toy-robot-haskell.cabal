@@ -66,6 +66,7 @@ executable toy-robot-haskell
   -- exposed-modules:    Haq
   other-modules:      Haq
                     , Robot
+                    , ToyRobot.CLI
 
   -- LANGUAGE extensions used by modules in this package.
   -- other-extensions:
@@ -104,6 +105,8 @@ test-suite tests
   -- Required due to including src/Haq.hs
   other-modules:      Haq
                     , Robot
+                    , ToyRobot.CLI
+                    , ToyRobot.CLISpec
                     , TestHelpers
                     , HaqSpec
                     , RobotSpec
