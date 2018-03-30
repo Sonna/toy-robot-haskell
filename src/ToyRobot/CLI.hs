@@ -9,19 +9,15 @@ module ToyRobot.CLI
 
 import Robot
 import System.IO
-import System.Environment
-import Data.List
 
-run :: IO ()
-run = do
+run :: [String] -> IO Robot
+run args = do
   let robot = new()
 
-  getArgs >>= \args -> case args of
+  case args of
       [filename] -> openFile filename ReadMode >>= \file -> fileLoop file robot
       [] -> userLoop robot
       _ -> putStr "Too many or not few enough Arguments" >> return robot
-
-  putStr ""
 
 fileLoop :: Handle -> Robot -> IO Robot
 fileLoop file robot = hIsEOF file >>= \ineof ->
@@ -43,11 +39,6 @@ execCommand robot line = exec robot command commandArgs
   where (command, commandArgs) = tuplifyInput (words line)
 
 tuplifyInput :: [String] -> (String, String)
-tuplifyInput wordList =
-  case wordList of
-      [rawCommand, rawCommandArgs] -> (rawCommand, rawCommandArgs)
-      [rawCommand] -> (rawCommand, "")
-      _ -> ("", "")
-
-readCommandLine :: IO [String]
-readCommandLine = fmap (words) getLine
+tuplifyInput [rawCommand, rawCommandArgs] = (rawCommand, rawCommandArgs)
+tuplifyInput [rawCommand] = (rawCommand, "")
+tuplifyInput _ = ("", "")

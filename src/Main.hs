@@ -1,6 +1,7 @@
 module Main where
 
 import ToyRobot.CLI
+import System.Environment
 
 main :: IO ()
-main = run
+main = getArgs >>= run >> putStr ""
