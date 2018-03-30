@@ -11,28 +11,25 @@ import Robot
 import System.IO
 
 run :: [String] -> IO Robot
-run args = do
-  let robot = new()
-
-  case args of
-      [filename] -> openFile filename ReadMode >>= \file -> fileLoop file robot
-      [] -> userLoop robot
-      _ -> putStr "Too many or not few enough Arguments" >> return robot
+run [filename] = openFile filename ReadMode >>= \file -> new_() >>= fileLoop file
+run [] = new_() >>= userLoop
+run _ = putStr "Too many or not few enough Arguments" >> new_() >>= return
 
 fileLoop :: Handle -> Robot -> IO Robot
-fileLoop file robot = hIsEOF file >>= \ineof ->
-  if ineof
-    then putStr "" >> return robot
-    else do
-      hGetLine file >>=
-        execCommand robot >>=
-          fileLoop file
+fileLoop file robot = hIsEOF file >>= fileProcessLine file robot
+
+fileProcessLine :: Handle -> Robot -> Bool -> IO Robot
+fileProcessLine _ robot True = putStr "" >> return robot
+fileProcessLine file robot False = hGetLine file >>= execCommand robot >>= fileLoop file
 
 userLoop :: Robot -> IO Robot
-userLoop robot = getLine >>= \line ->
-  case (words line) of
-    ["EXIT"] -> putStr "" >> return robot
-    _ -> execCommand robot line >>= userLoop
+userLoop robot = getLine >>= userProcessLine robot
+
+userProcessLine :: Robot -> String -> IO Robot
+userProcessLine robot "EXIT" = putStr "" >> return robot
+userProcessLine robot line = execCommand robot line >>= userLoop
+-- userProcessLine robot line = exec robot command commandArgs >>= userLoop
+--   where (command, commandArgs) = tuplifyInput (words line)
 
 execCommand :: Robot -> String -> IO Robot
 execCommand robot line = exec robot command commandArgs

@@ -2,6 +2,7 @@ module Robot
 (
   Robot (..),
   Robot.new,
+  Robot.new_,
   Robot.exec,
   Robot.left,
   Robot.right,
@@ -24,6 +25,8 @@ new () = Robot
   , y = 0
   , facing = "NORTH" }
 
+new_ :: () -> IO Robot
+new_ () = putStr "" >> return Robot { x = 0, y = 0, facing = "NORTH" }
 
 class Entity a where
   report :: a -> IO a

@@ -59,3 +59,34 @@ spec = do
       (x subject) `shouldBe` 4
       (y subject) `shouldBe` 2
       (facing subject) `shouldBe` "SOUTH"
+
+  describe "Validate FileLoop function" $ do
+    it "processes example A file" $ do
+      let filename = "examples/example_a.txt"
+
+      (output, subject) <- capture(run [filename])
+
+      output `shouldBe` "0,0,NORTH\n"
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "NORTH"
+
+    it "processes example B file" $ do
+      let filename = "examples/example_b.txt"
+
+      (output, subject) <- capture(run [filename])
+
+      output `shouldBe` "0,0,WEST\n"
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "WEST"
+
+    it "processes example C file" $ do
+      let filename = "examples/example_c.txt"
+
+      (output, subject) <- capture(run [filename])
+
+      output `shouldBe` "3,3,NORTH\n"
+      (x subject) `shouldBe` 3
+      (y subject) `shouldBe` 3
+      (facing subject) `shouldBe` "NORTH"
