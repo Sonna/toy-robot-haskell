@@ -19,6 +19,7 @@ jobs:
     - run: cabal sandbox init
     - run: cabal update
     - run: cabal install --enable-tests --enable-documentation
+    - run: cabal build
     - run: cabal test
 
 workflows:
