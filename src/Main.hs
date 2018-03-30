@@ -22,14 +22,18 @@ userLoop robot = do
   rawCommands <- readCommandLine
   if ((head rawCommands) == "EXIT")
     then putStr "" >> return robot -- Need to fix issue later
-    else do
-        let (command, commandArgs) = case rawCommands of
-              [rawCommand, rawCommandArgs] -> (rawCommand, rawCommandArgs)
-              [rawCommand] -> (rawCommand, "")
-              _ -> ("", "")
+    else execCommand robot rawCommands >>= \newRobot -> userLoop newRobot
 
-        exec robot command commandArgs >>= \newRobot -> userLoop newRobot
-        -- putStr "" -- Need to fix issue later
+execCommand :: Robot -> [String] -> IO Robot
+execCommand robot commandList = exec robot command commandArgs
+  where (command, commandArgs) = tuplifyInput commandList
+
+tuplifyInput :: [String] -> (String, String)
+tuplifyInput wordList =
+  case wordList of
+      [rawCommand, rawCommandArgs] -> (rawCommand, rawCommandArgs)
+      [rawCommand] -> (rawCommand, "")
+      _ -> ("", "")
 
 readCommandLine :: IO [String]
 readCommandLine = fmap (words) getLine
