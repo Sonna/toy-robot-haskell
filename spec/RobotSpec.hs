@@ -112,6 +112,22 @@ spec = do
       (y subject) `shouldBe` 1
       (facing subject) `shouldBe` "NORTH"
 
+    it "move works at 1 1 WEST" $ do
+      let robot = Robot 1 1 "WEST"
+      let subject = move robot
+
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 1
+      (facing subject) `shouldBe` "WEST"
+
+    it "move works at 1 1 SOUTH" $ do
+      let robot = Robot 1 1 "SOUTH"
+      let subject = move robot
+
+      (x subject) `shouldBe` 1
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "SOUTH"
+
     it "move decreases `y` field by 1, when facing SOUTH" $ do
       let robot = Robot 2 2 "SOUTH"
       let subject = move robot
