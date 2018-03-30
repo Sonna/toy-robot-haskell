@@ -17,7 +17,7 @@ run = do
   let robot = new()
 
   getArgs >>= \args -> case args of
-      [file] -> openFile (head args) ReadMode >>= \file -> fileLoop file robot
+      [filename] -> openFile filename ReadMode >>= \file -> fileLoop file robot
       [] -> userLoop robot
       _ -> putStr "Too many or not few enough Arguments" >> return robot
 
