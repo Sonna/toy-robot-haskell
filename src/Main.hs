@@ -1,4 +1,7 @@
 module Main where
 
+import ToyRobot.CLI
+import System.Environment
+
 main :: IO ()
-main = putStrLn "Hello, Haskell!"
+main = getArgs >>= run >> putStr ""
