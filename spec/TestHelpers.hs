@@ -37,41 +37,8 @@ catchOutput f = do
   removeFile tmpf
   return str
 
--- catchOutput :: IO a -> IO String
--- captureOutput :: IO a -> IO (String, a)
--- captureOutput f action = do
---   a <- action
---   tmpd <- getTemporaryDirectory
---   (tmpf, tmph) <- openTempFile tmpd "haskell_stdout"
---   stdout_dup <- hDuplicate stdout
---   hDuplicateTo tmph stdout
---   hClose tmph
---   f
---   hDuplicateTo stdout_dup stdout
---   str <- readFile tmpf
---   removeFile tmpf
---   return (str, a)
-
 capture :: IO a -> IO (String, a)
 capture = hCapture [stdout]
-
--- hCapture :: [Handle] -> IO a -> IO (String, a)
--- hCapture handles action = do
---   tmpDir <- getTemporaryDirectory
---   (tmpFile, tmpHandle) <- openTempFile tmpDir "haskell_stdout"
---   -- hSeek tmpHandle AbsoluteSeek 0
---   stdout_dup <- hDuplicate stdout
---   hDuplicateTo tmpHandle stdout
---   hClose tmpHandle
---   -- f
---   go handles
---   hDuplicateTo stdout_dup stdout
---   a <- action
---   str <- readFile tmpFile
---   removeFile tmpFile
---   str <- hGetContents tmpHandle
---   -- str `deepseq`
---   return (str,a)
 
 hCapture :: [Handle] -> IO a -> IO (String, a)
 hCapture handles action = do

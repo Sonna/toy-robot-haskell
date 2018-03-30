@@ -26,21 +26,14 @@ new () = Robot
 
 
 class Entity a where
-  -- report :: a -> (IO (), a)
-  -- report :: a -> IO ()
   report :: a -> IO a
   left :: a -> a
   right :: a -> a
   move :: a -> a
   place :: a -> String -> a
-  -- exec :: a -> String -> a
-  exec :: a -> String -> String -> a
-  -- exec :: a -> String -> String -> IO a
+  exec :: a -> String -> String -> IO a
 
 instance Entity Robot where
-  -- report robot = putStrLn $
-  --   show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot)
-
   report robot = do
     putStrLn (show (x robot) ++ "," ++ show (y robot) ++  "," ++ (facing robot))
     return robot
@@ -74,10 +67,11 @@ instance Entity Robot where
     where [newX, newY, newFacing] = splitOn "," rawCoordinates
 
   exec robot rawCommand rawArgs
-    | rawCommand == "PLACE" = place robot rawArgs
-    | rawCommand == "MOVE" = move robot
-    | rawCommand == "LEFT" = left robot
-    | rawCommand == "RIGHT" = right robot
-    -- | rawCommand == "REPORT" = report robot
-    | otherwise = robot
+    | rawCommand == "PLACE" = blank >> return (place robot rawArgs)
+    | rawCommand == "MOVE" = blank >> return (move robot)
+    | rawCommand == "LEFT" = blank >> return (left robot)
+    | rawCommand == "RIGHT" = blank >> return (right robot)
+    | rawCommand == "REPORT" = report robot
+    | otherwise = blank >> return robot
+    where blank = putStr ""
 

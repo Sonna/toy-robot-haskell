@@ -220,32 +220,45 @@ spec = do
   describe "exec function" $ do
     it "exec Robot place at 3,3,SOUTH" $ do
       let robot = Robot 0 0 "NORTH"
-      let subject = exec robot "PLACE" "3,3,SOUTH"
+      (output, subject) <- capture(exec robot "PLACE" "3,3,SOUTH")
 
+      output `shouldBe` ""
       (x subject) `shouldBe` 3
       (y subject) `shouldBe` 3
       (facing subject) `shouldBe` "SOUTH"
 
     it "exec Robot move" $ do
       let robot = new()
-      let subject = exec robot "MOVE" ""
+      (output, subject) <- capture(exec robot "MOVE" "")
 
+      output `shouldBe` ""
       (x subject) `shouldBe` 0
       (y subject) `shouldBe` 1
       (facing subject) `shouldBe` "NORTH"
 
     it "exec Robot LEFT" $ do
       let robot = new()
-      let subject = exec robot "LEFT" ""
+      (output, subject) <- capture(exec robot "LEFT" "")
 
+      output `shouldBe` ""
       (x subject) `shouldBe` 0
       (y subject) `shouldBe` 0
       (facing subject) `shouldBe` "WEST"
 
     it "exec Robot RIGHT" $ do
       let robot = new()
-      let subject = exec robot "RIGHT" ""
+      (output, subject) <- capture(exec robot "RIGHT" "")
 
+      output `shouldBe` ""
       (x subject) `shouldBe` 0
       (y subject) `shouldBe` 0
       (facing subject) `shouldBe` "EAST"
+
+    it "exec Robot REPORT" $ do
+      let robot = new()
+      (output, subject) <- capture(exec robot "REPORT" "")
+
+      output `shouldBe` "0,0,NORTH\n"
+      (x subject) `shouldBe` 0
+      (y subject) `shouldBe` 0
+      (facing subject) `shouldBe` "NORTH"
