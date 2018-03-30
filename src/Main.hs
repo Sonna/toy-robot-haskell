@@ -17,23 +17,19 @@ main = do
   putStr ""
 
 fileLoop :: Robot -> Handle -> IO Robot
-fileLoop robot file = do
-  ineof <- hIsEOF file
+fileLoop robot file = hIsEOF file >>= \ineof ->
   if ineof
     then putStr "" >> return robot
     else do
-      line <- hGetLine file
-      let rawCommands = (words line)
-      if ((head rawCommands) == "EXIT")
-        then putStr "" >> return robot
-        else execCommand robot rawCommands >>= \newRobot -> fileLoop newRobot file
+      hGetLine file >>= \line ->
+        execCommand robot (words line) >>= \newRobot ->
+          fileLoop newRobot file
 
 userLoop :: Robot -> IO Robot
-userLoop robot = do
-  rawCommands <- readCommandLine
-  if ((head rawCommands) == "EXIT")
-    then putStr "" >> return robot
-    else execCommand robot rawCommands >>= \newRobot -> userLoop newRobot
+userLoop robot = getLine >>= \line ->
+  case (words line) of
+    ["EXIT"] -> putStr "" >> return robot
+    _ -> execCommand robot (words line) >>= \newRobot -> userLoop newRobot
 
 execCommand :: Robot -> [String] -> IO Robot
 execCommand robot commandList = exec robot command commandArgs
