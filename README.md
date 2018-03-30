@@ -83,38 +83,6 @@ Expected output
 
     3,3,NORTH
 
-### Example d
-
-    PLACE 0,0,NORTH
-    REPORT
-    DRAW
-
-
-Expected output
-
-    0,0,NORTH
-    .....
-    .....
-    .....
-    .....
-    R....
-
-### Example e
-
-    PLACE 0,0,NORTH
-    REPORT
-    PLACE_OBJECT
-    DRAW
-
-Expected output
-
-    0,0,NORTH
-    .....
-    .....
-    .....
-    O....
-    R....
-
 Deliverables
 ------------
 
